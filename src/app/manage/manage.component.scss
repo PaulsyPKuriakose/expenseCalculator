@@ -1,0 +1,17 @@
+label {
+  /* Other styling... */
+  text-align: right;
+  clear: both;
+  float: left;
+  margin-left: 22%;
+}
+.dynamic {
+  margin-left: 10.6%;
+}
+.submit {
+  margin-left: 86%;
+}
+
+input.ng-invalid.ng-touched {
+  border: 1px solid red;
+}

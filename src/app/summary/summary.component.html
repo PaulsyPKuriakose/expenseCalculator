@@ -1,0 +1,112 @@
+<div class="container border border-1">
+  <div class="accordion accordion-flush" id="deptaccordion">
+    <div *ngFor="let dept of departments; let i = index" class="accordion-item">
+      <div class="row">
+        <div class="col">
+          <button
+            class="accordion-button collapsed"
+            type="button"
+            (click)="toggleAccordian($event, i, dept)"
+          >
+            {{ dept.name }}
+          </button>
+        </div>
+      </div>
+
+      <div *ngIf="!dept.isCollapsed">
+        <br />
+        <div class="container border border-1 singleItem">
+          <br />
+          <div class="row">
+            <div class="col-md-6">
+              <label style="color: darkred">
+                <b>Department manager :</b> {{ dept.manager }}</label
+              >
+            </div>
+            <div class="col-md-4">
+              <button
+                *ngIf="dept.deptwiseAllocationVisible"
+                type="button"
+                (click)="
+                  getDeptAllocation(dept, dept.deptwiseAllocationVisible)
+                "
+                class="btn btn-info"
+              >
+                Show Allocation
+              </button>
+              <button
+                *ngIf="!dept.deptwiseAllocationVisible"
+                type="button"
+                (click)="
+                  getDeptAllocation(dept, dept.deptwiseAllocationVisible)
+                "
+                class="btn btn-info"
+              >
+                Hide Allocation
+              </button>
+            </div>
+            <div class="col-md-2" *ngIf="!dept.deptwiseAllocationVisible">
+              ${{ dept.allocation }}
+            </div>
+          </div>
+          <br />
+          <div *ngFor="let member of dept.members">
+            <div class="row" *ngIf="member.name != null">
+              <div class="col-md-6">
+                <label style="color: blue">
+                  <b>Manager Name : </b>{{ member.name }}</label
+                >
+              </div>
+              <div class="col-md-4">
+                <button
+                  *ngIf="member.memberWiseAllocationVisible"
+                  type="button"
+                  (click)="
+                    getManagerWiseAllocation(
+                      member,
+                      member.memberWiseAllocationVisible
+                    )
+                  "
+                  class="btn btn-info"
+                >
+                  Show Allocation
+                </button>
+                <button
+                  *ngIf="!member.memberWiseAllocationVisible"
+                  type="button"
+                  (click)="
+                    getManagerWiseAllocation(
+                      member,
+                      member.memberWiseAllocationVisible
+                    )
+                  "
+                  class="btn btn-info"
+                >
+                  Hide Allocation
+                </button>
+              </div>
+              <div class="col-md-2" *ngIf="!member.memberWiseAllocationVisible">
+                ${{ member.allocation }}
+              </div>
+              <div class="row">
+                <div *ngFor="let emp of member.reportees" class="row">
+                  <div class="col">
+                    <div class="row">
+                      <div class="col">
+                        <label><b>Employee Name:</b> {{ emp.name }}</label>
+                      </div>
+                      <div class="col">
+                        <label><b>Role :</b> {{ emp.role }}</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br />
+      </div>
+    </div>
+  </div>
+</div>

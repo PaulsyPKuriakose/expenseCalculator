@@ -1,0 +1,167 @@
+<div class="container border border-1">
+  <br />
+  <form [formGroup]="manageFormGroup" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <div class="row">
+        <div class="col-sm">
+          <label for="dept"> <b> Department:</b></label>
+        </div>
+        <div class="col-sm" *ngIf="isNewDeptRequired">
+          <input
+            type="text"
+            formControlName="department"
+            class="form-control"
+            id="dept"
+          />
+        </div>
+        <div class="col-sm" *ngIf="!isNewDeptRequired">
+          <select
+            class="form-control"
+            (change)="changeDept($event)"
+            formControlName="department"
+          >
+            <option value="0">Choose department</option>
+            <option *ngFor="let item of departments" [ngValue]="item.name">
+              {{ item.name }}
+            </option>
+            <option value="">Add New Department</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="form-group">
+      <div class="row">
+        <div class="col">
+          <label for="name" style="text-align: left">
+            <b> Department Manager Name:</b></label
+          >
+        </div>
+        <div class="col">
+          <input
+            type="text"
+            id="name"
+            name="name"
+            formControlName="managerName"
+            class="form-control"
+          />
+        </div>
+      </div>
+    </div>
+
+    <br />
+
+    <div class="form-group">
+      <div class="row">
+        <div class="col">
+          <label> <b>Has Sub Managers :</b></label>
+        </div>
+        <div class="col">
+          <div class="radio">
+            <div class="row">
+              <div class="col-md-2">
+                <input
+                  type="radio"
+                  id="yes"
+                  formControlName="hasSubManagers"
+                  value="1"
+                />Yes
+              </div>
+              <div class="col-md-2">
+                <input
+                  type="radio"
+                  id="no"
+                  formControlName="hasSubManagers"
+                  value="0"
+                />No
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div
+      class="form-group"
+      *ngIf="manageFormGroup.get('hasSubManagers')?.value == '1'"
+    >
+      <div class="row">
+        <div class="col">
+          <label><b>Sub Manager :</b></label>
+        </div>
+        <div class="col">
+          <input
+            type="text"
+            formControlName="submanager"
+            class="form-control"
+            id="submgr"
+          />
+        </div>
+      </div>
+    </div>
+    <br />
+    <div formArrayName="employees">
+      <div class="row">
+        <div class="col-md-6">
+          <label for="mapping"><b>Map Employees:</b></label>
+        </div>
+
+        <div class="col-md-auto" id="mapping">
+          <button type="button" (click)="addEmployee()" class="btn btn-primary">
+            Add
+          </button>
+        </div>
+      </div>
+      <br />
+      <div class="form-group dynamic">
+        <div
+          class="row"
+          *ngFor="let emp of getEmployeeControl().controls; let i = index"
+          [formGroupName]="i"
+        >
+          <div class="col">
+            Id :
+            <input type="text" formControlName="id" class="form-control" />
+          </div>
+          <div class="col">
+            Name:
+            <input type="text" formControlName="name" class="form-control" />
+          </div>
+          <div class="col">
+            Role:
+            <select class="form-control" formControlName="role">
+              <option
+                *ngFor="let role of roles | keyvalue"
+                [ngValue]="role.value"
+              >
+                {{ role.value }}
+              </option>
+            </select>
+          </div>
+          <div class="col-md-2" style="padding-top: 2.5%">
+            <button (click)="removeEmployee(i)" class="btn btn-danger">
+              Remove
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="form-group submit">
+      <div class="row">
+        <div class="col">
+          <button
+            type="submit"
+            class="btn btn-success"
+            style="align-items: end"
+            [disabled]="!manageFormGroup.valid"
+          >
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <br />
+</div>
